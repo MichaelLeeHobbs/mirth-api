@@ -1,4 +1,4 @@
-const MirthApi = require('../src/index')
+const MirthApi = require('../src/MirthApi')
 const fs = require('fs-extra')
 const changeCase = require('change-case')
 

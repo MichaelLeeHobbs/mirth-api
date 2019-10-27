@@ -1,15 +1,22 @@
 {
   "name": "mirth-api",
   "version": "0.0.1",
-  "description": "Mirth API - A Mirth client for Node.js.",
-  "main": "src/index.js",
+  "description": "A Mirth client for Node.js.",
+  "main": "src/MirthApi.js",
   "author": "Michael Hobbs <michael.lee.hobbs@gmail.com>",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
+  "repository": "github/MichaelLeeHobbs/mirth-api",
   "dependencies": {
     "change-case": "^3.1.0",
     "swagger-client": "^3.9.5"
   },
   "devDependencies": {
     "fs-extra": "^8.1.0"
-  }
+  },
+  "files": [
+    "LICENSE",
+    "src/MirthApi.js",
+    "documents/**",
+    "README.md"
+  ]
 }
