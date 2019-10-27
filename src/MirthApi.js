@@ -22,7 +22,7 @@ class MirthApi {
             url: this.url,
             requestInterceptor: function (req) {
                 req.headers["Cookie"] = COOKIE
-                console.log('requestInterceptor', req)
+                // console.log('requestInterceptor', req)
                 return req
             }
         })
