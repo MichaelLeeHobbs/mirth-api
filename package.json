@@ -8,5 +8,8 @@
   "dependencies": {
     "change-case": "^3.1.0",
     "swagger-client": "^3.9.5"
+  },
+  "devDependencies": {
+    "fs-extra": "^8.1.0"
   }
 }
