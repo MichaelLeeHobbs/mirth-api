@@ -1,16 +1,19 @@
 const Swagger = require('swagger-client')
 const changeCase = require('change-case')
 
-let cookie = ''
+let COOKIE = ''
 let loginRef = ''
 
 class MirthApi {
-    constructor({host, port, username, password, noLogin = false}) {
+    constructor({host = '127.0.0.1', port = '8443', username = 'admin', password = 'admin', noLogin = false, disableTLSCheck = false} = {}) {
         this._host = host
         this._port = port
         this._username = username
         this._password = password
         this.login.bind(this)
+        if (disableTLSCheck) {
+            process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"
+        }
         return this._init({noLogin})
     }
 
@@ -18,7 +21,7 @@ class MirthApi {
         this._client = await new Swagger({
             url: this.url,
             requestInterceptor: function (req) {
-                req.headers["Cookie"] = cookie
+                req.headers["Cookie"] = COOKIE
                 console.log('requestInterceptor', req)
                 return req
             }
@@ -38,11 +41,24 @@ class MirthApi {
         return `https://${this._host}:${this._port}/api/swagger.json`
     }
 
+    get cookie() {
+        return COOKIE
+    }
+
+    set cookie(value) {
+        COOKIE = value
+    }
+
     async login({username = this._username, password = this._password} = {}) {
         // let res = await this._originalLoginFunc({username, password})
         // let res = await this._client.apis['Users'].login({username, password})
         let res = await loginRef({username, password})
-        cookie = res.headers['set-cookie']
+        COOKIE = res.headers['set-COOKIE']
+        return res
+    }
+
+    get swaggerClient() {
+        return this._client
     }
 
     get host() {
