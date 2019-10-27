@@ -1,6 +1,6 @@
 {
   "name": "mirth-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Mirth client for Node.js.",
   "main": "src/MirthApi.js",
   "author": "Michael Hobbs <michael.lee.hobbs@gmail.com>",

@@ -53,7 +53,7 @@ class MirthApi {
         // let res = await this._originalLoginFunc({username, password})
         // let res = await this._client.apis['Users'].login({username, password})
         let res = await loginRef({username, password})
-        COOKIE = res.headers['set-COOKIE']
+        COOKIE = res.headers['set-cookie']
         return res
     }
 
