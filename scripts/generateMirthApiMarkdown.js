@@ -41,7 +41,7 @@ async function main() {
 
             operation.parameters.forEach(param=>markdown += `| ${param.name} | ${param.description} | ${param.required ? 'Yes' : 'No'} |\r\n`)
             markdown += [
-                `Responses:\r\n`,
+                `\r\nResponses:\r\n`,
                 `| Name | Description | Schema |`,
                 `| ------ | ------ | ------ |\r\n`,
             ].join('\r\n')
