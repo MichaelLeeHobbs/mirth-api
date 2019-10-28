@@ -5,6 +5,7 @@ The MirthApi is a simple promised based Node.js client for calling Mirth API end
 ## Table of Contents
 
 * [Read First](#read-first)
+* [Notices](#notices)
 * [Installation](#installation)
 * [Usage](#usage)
   * [Promise](#promise)
@@ -14,6 +15,7 @@ The MirthApi is a simple promised based Node.js client for calling Mirth API end
   * [Session Cookies](#session-cookies)
 * [Mirth Version](#mirth-version)
 * [Browser Support](#browser-support)
+* [Changes](#changes)
 * [TODO](#todo)
 * [Functions And Properties](#functions-and-properties)
   * [Core Properties](#core-properties)
@@ -27,6 +29,14 @@ Use at your own risk! I built this in about 2 hours and then spent another 3-4 h
 That said it should be very solid as it is build on top of [swagger-client](https://github.com/swagger-api/swagger-js). The reason I qualify this as a ALPHA release is there
 has been little to no testing beyond login and a few other calls to other functions. I don't know how much time I will have to take this project forward as I have a very full life.
 If you are interesting in helping out then please contact me. Pull request are more than welcome!
+
+## Notices
+Currently the documentation is badly lacking on any function that has body as one of the inputs. This will be addressed in the next week or so. For now use the following as an example of how to craft a body.
+
+```javascript
+// minimal example - body requires a user object and a user object has a number of props
+let res = await mirthClient.Users.createUser({body: {user: {username: 'test'}}}).catch(console.error)
+```
 
 ## Installation
 
@@ -105,6 +115,12 @@ The Swagger Client has a requestInterceptor to apply cookies that are caught in 
 ## Browser Support
 
 A this time there is no planned support for browsers. It would likely be very easy to create a fork of this project and create a version that supports browsers. Pull request is welcome!
+
+## Changes
+
+### Version 0.0.5
+* Fixed Bug #1
+* Added feature to responseInterceptor where it will attempt to parse the response body into xml and then json ie res.json
 
 ## TODO
   * Better auto generate documentation

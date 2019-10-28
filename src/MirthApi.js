@@ -1,5 +1,6 @@
 const Swagger = require('swagger-client')
 const changeCase = require('change-case')
+const xml2js = require('xml2js')
 
 let COOKIE = ''
 let loginRef = ''
@@ -18,12 +19,38 @@ class MirthApi {
     }
 
     async _init({noLogin}) {
+        const xmlBuilder = new xml2js.Builder()
+        const xmlParser = new xml2js.Parser()
+        const xmlParse = async (xml)=> {
+            try {
+                return await xmlParser.parseStringPromise(xml)
+            } catch (e) {
+                return undefined
+            }
+        }
+
         this._client = await new Swagger({
             url: this.url,
             requestInterceptor: function (req) {
                 req.headers["Cookie"] = COOKIE
-                // console.log('requestInterceptor', req)
+                if (req.body && req.body.indexOf('{') === 0) {
+                    req.body = xmlBuilder.buildObject(JSON.parse(req.body))
+                }
                 return req
+            },
+            responseInterceptor: async function (res) {
+                // if (res.ok) {
+                    if (res.headers['set-cookie']) {
+                        COOKIE = res.headers['set-cookie']
+                    }
+                    if (typeof res.text === 'string' && res.statusText !== 'No Content') {
+                        res.json = await xmlParse(res.text)
+                    } else if (typeof res.text.toString === 'function' && res.statusText !== 'No Content') {
+                        let text = await res.text.toString()
+                        res.json = await xmlParse(text)
+                    }
+                // }
+                return res
             }
         })
         loginRef = this._client.apis['Users'].login
@@ -33,7 +60,7 @@ class MirthApi {
             this[newKey] = this._client.apis[key]
         })
         this.Users.login = this.login.bind(this)
-        if (!noLogin) await this.login()
+        if (!noLogin) await this.Users.login({username: this._username, password: this._password})
         return this
     }
 
@@ -53,7 +80,7 @@ class MirthApi {
         // let res = await this._originalLoginFunc({username, password})
         // let res = await this._client.apis['Users'].login({username, password})
         let res = await loginRef({username, password})
-        COOKIE = res.headers['set-cookie']
+        // COOKIE = res.headers['set-cookie']
         return res
     }
 

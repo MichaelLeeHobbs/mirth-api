@@ -1,6 +1,6 @@
 {
   "name": "mirth-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Mirth client for Node.js.",
   "main": "src/MirthApi.js",
   "author": "Michael Hobbs <michael.lee.hobbs@gmail.com>",
@@ -8,7 +8,8 @@
   "repository": "https://github.com/MichaelLeeHobbs/mirth-api",
   "dependencies": {
     "change-case": "^3.1.0",
-    "swagger-client": "^3.9.5"
+    "swagger-client": "^3.9.5",
+    "xml2js": "^0.4.22"
   },
   "devDependencies": {
     "fs-extra": "^8.1.0"
